@@ -3,8 +3,9 @@
 
 #include "HandController.h"
 
-AHandController::AHandController()
-{
+#include "Engine/World.h"
+
+AHandController::AHandController() {
 	PrimaryActorTick.bCanEverTick = true;
 
 	MotionController = CreateDefaultSubobject<UMotionControllerComponent>(TEXT("MotionController"));
@@ -13,12 +14,19 @@ AHandController::AHandController()
 	MotionController->SetShowDeviceModel(true);
 }
 
-void AHandController::BeginPlay()
-{
+void AHandController::BeginPlay() {
 	Super::BeginPlay();
 }
 
-void AHandController::Tick(float DeltaTime)
-{
+void AHandController::Tick(float DeltaTime) {
 	Super::Tick(DeltaTime);
+}
+
+void AHandController::TriggerPressed() {
+	  AStroke* Stroke = GetWorld()->SpawnActor<AStroke>(StrokeClass);
+	  Stroke->SetActorLocation(GetActorLocation());
+}
+
+void AHandController::TriggerReleased() {
+
 }

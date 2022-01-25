@@ -5,10 +5,8 @@
 
 #include "Engine/World.h"
 
-#include "HandController.h"
 
-AVRPawn::AVRPawn()
-{
+AVRPawn::AVRPawn() {
 	PrimaryActorTick.bCanEverTick = false;
 
 	VRRoot = CreateDefaultSubobject<USceneComponent>(TEXT("VRRoot"));
@@ -18,8 +16,7 @@ AVRPawn::AVRPawn()
 	Camera->SetupAttachment(VRRoot);
 }
 
-void AVRPawn::BeginPlay()
-{
+void AVRPawn::BeginPlay() {
 	Super::BeginPlay();
 
 	if (HandControllerClass) {
@@ -27,4 +24,12 @@ void AVRPawn::BeginPlay()
 		RightHandController->AttachToComponent(GetRootComponent(), FAttachmentTransformRules::SnapToTargetNotIncludingScale);
 		RightHandController->SetOwner(this);
 	}
+}
+
+void AVRPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent) {
+	 Super::SetupPlayerInputComponent(PlayerInputComponent);
+
+	 PlayerInputComponent->BindAction(TEXT("RightTrigger"), EInputEvent::IE_Pressed, this, &AVRPawn::RightTriggerPressed);
+	 PlayerInputComponent->BindAction(TEXT("RightTrigger"), EInputEvent::IE_Released, this, &AVRPawn::RightTriggerReleased);
+
 }
