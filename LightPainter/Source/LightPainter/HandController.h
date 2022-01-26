@@ -29,12 +29,13 @@ public:
 private:
 
 	// Config
-
 	UPROPERTY(EditAnywhere)
 		TSubclassOf<AStroke> StrokeClass;
 
 	//Components
-
 	UPROPERTY(VisibleAnywhere)
 		UMotionControllerComponent* MotionController;
+
+		// State
+		AStroke* CurrentStroke;
 };

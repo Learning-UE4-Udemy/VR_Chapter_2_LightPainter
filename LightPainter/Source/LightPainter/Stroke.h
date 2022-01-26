@@ -10,17 +10,28 @@ UCLASS()
 class LIGHTPAINTER_API AStroke : public AActor
 {
 	GENERATED_BODY()
-	
-public:	
-	// Sets default values for this actor's properties
+
+public:
 	AStroke();
 
-protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
+	void Update(FVector CursorLocation);
 
-public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
+private:
+
+	class USplineMeshComponent* CreateSplineMesh();
+
+	// Components
+	UPROPERTY(VisibleAnywhere)
+		USceneComponent* Root;
+
+	// Config
+	UPROPERTY(EditDefaultsOnly)
+		UStaticMesh* SplineMesh;
+
+	UPROPERTY(EditDefaultsOnly)
+		UMaterialInterface* SplineMaterial;
+
+		// State
+		FVector PreviousCursorLocation;
 
 };
